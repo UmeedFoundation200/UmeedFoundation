@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#f6f2e9" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23176b60'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia' font-size='38' fill='%23fffdf8'%3EU%3C/text%3E%3C/svg%3E" />
     <title>Umeed Foundation — Help for Poor, Flood Affected</title>
     <style>
       :root {
@@ -715,6 +716,18 @@
         </div>
 
         <div class="story-column">
+          <section class="qr-section" aria-labelledby="qr-title">
+            <div class="qr-frame">
+              <img id="qr-image" alt="UPI QR code for Umeed Foundation" />
+              <div id="qr-fallback" class="qr-fallback" hidden>UPI<br />QR</div>
+            </div>
+            <div class="qr-copy">
+              <h2 id="qr-title">Scan &amp; Donate</h2>
+              <p>Open any UPI app and scan this code to give directly.</p>
+              <span class="no-amount">No amount is pre-filled</span>
+            </div>
+          </section>
+
           <article class="story-art" aria-label="Campaign statement">
             <h2>Hope begins with showing up.</h2>
             <p>Help make the next meal, safe night and fresh start a little closer for a family affected by flooding.</p>
@@ -782,20 +795,8 @@
             </form>
           </section>
 
-          <section class="qr-section" aria-labelledby="qr-title">
-            <div class="qr-frame">
-              <img id="qr-image" alt="UPI QR code for Umeed Foundation" />
-              <div id="qr-fallback" class="qr-fallback" hidden>UPI<br />QR</div>
-            </div>
-            <div class="qr-copy">
-              <h2 id="qr-title">Scan &amp; Donate</h2>
-              <p>Open any UPI app and scan this code to give directly.</p>
-              <span class="no-amount">No amount is pre-filled</span>
-            </div>
-          </section>
-
           <section class="about-card" aria-labelledby="about-title">
-            <h2 id="about-title">About Umeed Foundation</h2>
+            <h2 id="about-title">Contact &amp; NGO details</h2>
             <p>
               Umeed Foundation is a community-led initiative focused on supporting people through difficult moments with care, dignity and practical help.
             </p>
@@ -883,28 +884,41 @@
         return amount;
       }
 
+      function buildUpiQuery(amount, reference) {
+        const params = [
+          ["pa", UPI_ID],
+          ["pn", NGO_NAME],
+          ["am", amount.toFixed(2)],
+          ["cu", "INR"],
+          ["tn", `${DESCRIPTION} | Ref: ${reference}`]
+        ];
+        /* Encode each value explicitly so payment apps receive the amount and note reliably. */
+        return params.map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join("&");
+      }
+
       function buildUpiUri(amount, provider) {
         const reference = createReference();
         referenceNumber.textContent = reference;
-        const params = new URLSearchParams({
-          pa: UPI_ID,
-          pn: NGO_NAME,
-          am: amount.toFixed(2),
-          cu: "INR",
-        });
-        params.set("tn", `${DESCRIPTION} | Ref: ${reference}`);
+        const query = buildUpiQuery(amount, reference);
 
-        /* App-specific schemes improve handoff; the generic UPI URI remains the fallback. */
-        const scheme = {
-          "Google Pay": "tez",
-          "PhonePe": "phonepe",
-          "Paytm": "paytmmp"
-        }[provider];
-        return `${scheme || "upi"}://pay?${params.toString()}`;
+        /*
+         * Google Pay on Android is most reliable with an explicit Android intent.
+         * The intent contains the full UPI query, so amount, payee and note are
+         * handed to Google Pay instead of opening a blank payment screen.
+         */
+        if (provider === "Google Pay") {
+          if (/Android/i.test(navigator.userAgent)) {
+            return `intent://pay?${query}#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end`;
+          }
+          return `tez://upi/pay?${query}`;
+        }
+
+        const scheme = { "PhonePe": "phonepe", "Paytm": "paytmmp" }[provider];
+        return `${scheme || "upi"}://pay?${query}`;
       }
 
       function showLaunchMessage(provider, amount, reference) {
-        paymentStatus.innerHTML = `<strong>${provider} should open now.</strong> If it doesn’t, scan the QR code or copy the UPI ID instead. Your reference is ${reference}.`;
+        paymentStatus.innerHTML = `<strong>${provider} should open with ${formatInr(amount)} ready.</strong> If it doesn’t, scan the QR code or copy the UPI ID instead. Your reference is ${reference}.`;
         paymentStatus.classList.add("visible");
         paymentStatus.dataset.amount = formatInr(amount);
       }

@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f2e9" />
+    <title>Umeed Foundation — Help for Poor, Flood Affected</title>
+    <style>
+      :root {
+        --paper: #f7f4ed;
+        --paper-deep: #eee9dc;
+        --ink: #19312e;
+        --muted: #67736c;
+        --line: #d9ded4;
+        --white: #fffdf8;
+        --teal: #176b60;
+        --teal-dark: #0e5048;
+        --saffron: #e4a63c;
+        --saffron-soft: #f8ebce;
+        --coral: #bd5d43;
+        --shadow: 0 22px 60px rgba(31, 53, 45, 0.11);
+        --radius-lg: 28px;
+        --radius-md: 16px;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 92% 4%, rgba(228, 166, 60, 0.12), transparent 24rem),
+          var(--paper);
+        font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      button, input { font: inherit; }
+      button { cursor: pointer; }
+
+      .shell {
+        width: min(1160px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 28px 0 18px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 0.94rem;
+        font-weight: 760;
+        letter-spacing: -0.02em;
+      }
+
+      .brand-mark {
+        display: grid;
+        width: 38px;
+        height: 38px;
+        place-items: center;
+        border-radius: 13px 13px 13px 4px;
+        color: var(--white);
+        background: var(--teal);
+        box-shadow: 5px 5px 0 rgba(228, 166, 60, 0.75);
+        font-family: Georgia, serif;
+        font-size: 1.45rem;
+        font-weight: 700;
+      }
+
+      .secure-note {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .secure-note svg { color: var(--teal); }
+
+      .hero {
+        display: grid;
+        gap: 34px;
+        align-items: start;
+        padding: 48px 0 64px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        margin: 0 0 18px;
+        color: var(--teal);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 28px;
+        height: 2px;
+        background: var(--saffron);
+        content: "";
+      }
+
+      h1, h2, p { margin-top: 0; }
+
+      h1 {
+        max-width: 640px;
+        margin-bottom: 20px;
+        color: var(--ink);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2.55rem, 7vw, 5.2rem);
+        font-weight: 500;
+        letter-spacing: -0.065em;
+        line-height: 0.98;
+      }
+
+      h1 em {
+        color: var(--coral);
+        font-style: normal;
+      }
+
+      .intro {
+        max-width: 550px;
+        margin-bottom: 30px;
+        color: var(--muted);
+        font-size: clamp(1rem, 2vw, 1.13rem);
+        line-height: 1.7;
+      }
+
+      .impact-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px 24px;
+        color: var(--muted);
+        font-size: 0.79rem;
+        font-weight: 650;
+      }
+
+      .impact-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .impact-icon {
+        display: grid;
+        width: 28px;
+        height: 28px;
+        place-items: center;
+        border-radius: 50%;
+        color: var(--teal);
+        background: var(--saffron-soft);
+      }
+
+      .payment-card {
+        position: relative;
+        overflow: hidden;
+        padding: 25px;
+        border: 1px solid rgba(217, 222, 212, 0.9);
+        border-radius: var(--radius-lg);
+        background: var(--white);
+        box-shadow: var(--shadow);
+      }
+
+      .payment-card::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--teal) 70%, var(--saffron) 70%);
+        content: "";
+      }
+
+      .card-kicker {
+        margin: 5px 0 5px;
+        color: var(--teal);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .payment-card h2 {
+        margin-bottom: 22px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.75rem;
+        font-weight: 500;
+        letter-spacing: -0.04em;
+      }
+
+      .field-label {
+        display: block;
+        margin-bottom: 9px;
+        color: var(--ink);
+        font-size: 0.8rem;
+        font-weight: 800;
+      }
+
+      .amount-wrap {
+        position: relative;
+        margin-bottom: 13px;
+      }
+
+      .currency {
+        position: absolute;
+        top: 50%;
+        left: 17px;
+        color: var(--teal);
+        font-size: 1.22rem;
+        font-weight: 800;
+        pointer-events: none;
+        transform: translateY(-52%);
+      }
+
+      #amount {
+        width: 100%;
+        height: 58px;
+        padding: 0 17px 0 42px;
+        border: 1.5px solid var(--line);
+        border-radius: 13px;
+        outline: none;
+        color: var(--ink);
+        background: #fbfaf6;
+        font-size: 1.35rem;
+        font-weight: 750;
+        transition: border-color 150ms ease, box-shadow 150ms ease;
+      }
+
+      #amount:focus {
+        border-color: var(--teal);
+        box-shadow: 0 0 0 4px rgba(23, 107, 96, 0.12);
+      }
+
+      #amount[aria-invalid="true"] {
+        border-color: var(--coral);
+        box-shadow: 0 0 0 4px rgba(189, 93, 67, 0.1);
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        margin: 0;
+        -webkit-appearance: none;
+      }
+
+      input[type=number] { -moz-appearance: textfield; }
+
+      .quick-label {
+        margin: 0 0 9px;
+        color: var(--muted);
+        font-size: 0.74rem;
+        font-weight: 700;
+      }
+
+      .quick-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 7px;
+        margin-bottom: 19px;
+      }
+
+      .quick-button {
+        min-height: 39px;
+        padding: 6px 3px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        color: var(--ink);
+        background: var(--white);
+        font-size: 0.82rem;
+        font-weight: 750;
+        transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+      }
+
+      .quick-button:hover, .quick-button.selected {
+        border-color: var(--teal);
+        color: var(--white);
+        background: var(--teal);
+      }
+
+      .error-message {
+        min-height: 20px;
+        margin: -5px 0 9px;
+        color: var(--coral);
+        font-size: 0.77rem;
+        font-weight: 700;
+      }
+
+      .app-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+
+      .app-button {
+        display: flex;
+        min-height: 50px;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        padding: 8px 4px;
+        border: 1px solid var(--line);
+        border-radius: 11px;
+        color: var(--ink);
+        background: var(--white);
+        font-size: 0.75rem;
+        font-weight: 800;
+        transition: border-color 150ms ease, transform 150ms ease, background 150ms ease;
+      }
+
+      .app-button:hover {
+        border-color: var(--teal);
+        background: #f4f8f4;
+        transform: translateY(-1px);
+      }
+
+      .app-logo {
+        display: grid;
+        width: 23px;
+        height: 23px;
+        place-items: center;
+        border-radius: 7px;
+        color: white;
+        font-size: 0.66rem;
+        font-weight: 900;
+      }
+
+      .gpay { background: #3d82f6; }
+      .phonepe { background: #5f259f; }
+      .paytm { background: #00a8e8; }
+
+      .upi-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 13px 14px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fbfaf6;
+      }
+
+      .upi-copy {
+        min-width: 0;
+      }
+
+      .upi-caption {
+        display: block;
+        margin-bottom: 2px;
+        color: var(--muted);
+        font-size: 0.68rem;
+        font-weight: 750;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .upi-id {
+        display: block;
+        overflow: hidden;
+        color: var(--ink);
+        font-size: 0.84rem;
+        font-weight: 800;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .copy-button {
+        flex: 0 0 auto;
+        border: 0;
+        color: var(--teal);
+        background: transparent;
+        font-size: 0.74rem;
+        font-weight: 850;
+      }
+
+      .copy-button:hover { color: var(--coral); }
+
+      .donate-button, .app-redirect {
+        display: flex;
+        width: 100%;
+        min-height: 54px;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        border: 0;
+        border-radius: 12px;
+        font-weight: 850;
+        letter-spacing: -0.01em;
+      }
+
+      .app-redirect {
+        margin-top: 13px;
+        color: var(--white);
+        background: var(--teal);
+        box-shadow: 0 9px 18px rgba(23, 107, 96, 0.17);
+        transition: background 150ms ease, transform 150ms ease;
+      }
+
+      .app-redirect:hover { background: var(--teal-dark); transform: translateY(-1px); }
+
+      .donate-button {
+        margin-top: 16px;
+        color: var(--white);
+        background: var(--coral);
+        box-shadow: 0 9px 18px rgba(189, 93, 67, 0.2);
+        transition: background 150ms ease, transform 150ms ease;
+      }
+
+      .donate-button:hover { background: #a34c36; transform: translateY(-1px); }
+
+      .supporting-text {
+        margin: 14px 0 0;
+        color: var(--muted);
+        font-size: 0.7rem;
+        line-height: 1.55;
+        text-align: center;
+      }
+
+      .payment-status {
+        display: none;
+        margin: 15px 0 0;
+        padding: 11px 12px;
+        border-radius: 10px;
+        color: var(--teal-dark);
+        background: #eaf4ee;
+        font-size: 0.76rem;
+        line-height: 1.45;
+      }
+
+      .payment-status.visible { display: block; }
+
+      .payment-status strong { font-weight: 850; }
+
+      .story-column {
+        display: grid;
+        gap: 18px;
+      }
+
+      .story-art {
+        position: relative;
+        min-height: 218px;
+        overflow: hidden;
+        padding: 26px;
+        border-radius: var(--radius-lg);
+        color: var(--white);
+        background:
+          linear-gradient(135deg, rgba(14, 80, 72, 0.92), rgba(23, 107, 96, 0.73)),
+          #176b60;
+      }
+
+      .story-art::after {
+        position: absolute;
+        right: -38px;
+        bottom: -65px;
+        width: 220px;
+        height: 220px;
+        border: 1px solid rgba(255, 253, 248, 0.18);
+        border-radius: 50%;
+        box-shadow: 0 0 0 28px rgba(255, 253, 248, 0.05), 0 0 0 57px rgba(255, 253, 248, 0.04);
+        content: "";
+      }
+
+      .story-art h2 {
+        position: relative;
+        z-index: 1;
+        max-width: 360px;
+        margin: 0 0 12px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.8rem, 4vw, 2.45rem);
+        font-weight: 500;
+        letter-spacing: -0.05em;
+        line-height: 1.05;
+      }
+
+      .story-art p {
+        position: relative;
+        z-index: 1;
+        max-width: 330px;
+        margin: 0;
+        color: rgba(255, 253, 248, 0.78);
+        font-size: 0.89rem;
+      }
+
+      .about-card {
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        background: rgba(255, 253, 248, 0.6);
+      }
+
+      .about-card h2 {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 12px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.5rem;
+        font-weight: 500;
+        letter-spacing: -0.04em;
+      }
+
+      .about-card h2::before {
+        width: 23px;
+        height: 3px;
+        border-radius: 9px;
+        background: var(--saffron);
+        content: "";
+      }
+
+      .about-card > p {
+        margin-bottom: 18px;
+        color: var(--muted);
+        font-size: 0.88rem;
+        line-height: 1.65;
+      }
+
+      .details {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+      }
+
+      .detail {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding-top: 10px;
+        border-top: 1px solid var(--line);
+        font-size: 0.78rem;
+      }
+
+      .detail dt { color: var(--muted); }
+      .detail dd {
+        margin: 0;
+        color: var(--ink);
+        font-weight: 700;
+        text-align: right;
+      }
+
+      .qr-section {
+        display: grid;
+        grid-template-columns: 124px 1fr;
+        align-items: center;
+        gap: 18px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-lg);
+        background: var(--saffron-soft);
+      }
+
+      .qr-frame {
+        display: grid;
+        width: 124px;
+        height: 124px;
+        place-items: center;
+        overflow: hidden;
+        padding: 8px;
+        border: 7px solid var(--white);
+        border-radius: 8px;
+        background: var(--white);
+        box-shadow: 0 3px 12px rgba(73, 63, 37, 0.12);
+      }
+
+      #qr-image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .qr-fallback {
+        display: grid;
+        width: 100%;
+        height: 100%;
+        place-items: center;
+        border: 7px solid var(--ink);
+        color: var(--ink);
+        font-size: 0.52rem;
+        font-weight: 900;
+        letter-spacing: 0.02em;
+        text-align: center;
+      }
+
+      .qr-copy h2 {
+        margin-bottom: 6px;
+        color: var(--ink);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.55rem;
+        font-weight: 500;
+        letter-spacing: -0.05em;
+      }
+
+      .qr-copy p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.76rem;
+        line-height: 1.5;
+      }
+
+      .qr-copy .no-amount {
+        display: inline-block;
+        margin-top: 8px;
+        color: var(--teal);
+        font-size: 0.69rem;
+        font-weight: 800;
+      }
+
+      .reference-line {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        margin: 18px 0 0;
+        color: var(--muted);
+        font-size: 0.68rem;
+      }
+
+      .reference-line strong {
+        color: var(--ink);
+        font-weight: 800;
+      }
+
+      .dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--saffron);
+      }
+
+      @media (min-width: 760px) {
+        .shell { width: min(1160px, calc(100% - 80px)); }
+        .topbar { padding-top: 38px; }
+        .hero {
+          grid-template-columns: minmax(0, 1fr) minmax(360px, 460px);
+          gap: clamp(48px, 8vw, 110px);
+          padding-top: 70px;
+        }
+        .payment-card { padding: 30px; }
+        .story-column { padding-top: 8px; }
+        .story-art { min-height: 252px; padding: 32px; }
+        .about-card { padding: 28px 30px; }
+      }
+
+      @media (max-width: 480px) {
+        .shell { width: min(100% - 28px, 1160px); }
+        .topbar { padding-top: 21px; }
+        .secure-note { font-size: 0.63rem; }
+        .secure-note svg { width: 13px; }
+        .hero { padding-top: 35px; }
+        .payment-card { padding: 21px 18px; }
+        .qr-section { grid-template-columns: 104px 1fr; gap: 13px; padding: 14px; }
+        .qr-frame { width: 104px; height: 104px; }
+        .qr-copy h2 { font-size: 1.36rem; }
+        .qr-copy p { font-size: 0.7rem; }
+        .detail { gap: 10px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="shell topbar">
+      <a class="brand" href="#donate" aria-label="Umeed Foundation home">
+        <span class="brand-mark" aria-hidden="true">U</span>
+        <span>Umeed Foundation</span>
+      </a>
+      <span class="secure-note">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 3 5.5 6v5.4c0 4.1 2.7 7.8 6.5 9.1 3.8-1.3 6.5-5 6.5-9.1V6L12 3Z" stroke="currentColor" stroke-width="1.8"/>
+          <path d="m9.3 12 1.8 1.8 3.7-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Secure UPI giving
+      </span>
+    </header>
+
+    <main class="shell" id="donate">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">A little help, a lot of hope</p>
+          <h1 id="page-title">Stand with families rebuilding after the <em>floods.</em></h1>
+          <p class="intro">
+            Your contribution to the Help for Poor — Flood Affected campaign can support essential relief for people taking their first steps back home.
+          </p>
+          <div class="impact-strip" aria-label="Campaign values">
+            <span class="impact-item">
+              <span class="impact-icon" aria-hidden="true">♥</span>
+              Direct support
+            </span>
+            <span class="impact-item">
+              <span class="impact-icon" aria-hidden="true">↗</span>
+              Every amount matters
+            </span>
+          </div>
+        </div>
+
+        <div class="story-column">
+          <article class="story-art" aria-label="Campaign statement">
+            <h2>Hope begins with showing up.</h2>
+            <p>Help make the next meal, safe night and fresh start a little closer for a family affected by flooding.</p>
+          </article>
+
+          <section class="payment-card" aria-labelledby="payment-title">
+            <p class="card-kicker">Make a contribution</p>
+            <h2 id="payment-title">Choose your amount</h2>
+
+            <form id="donation-form" novalidate>
+              <label class="field-label" for="amount">Donation amount</label>
+              <div class="amount-wrap">
+                <span class="currency" aria-hidden="true">₹</span>
+                <input id="amount" name="amount" type="number" inputmode="decimal" min="1" step="1" placeholder="Enter amount" aria-describedby="amount-error" />
+              </div>
+              <p id="amount-error" class="error-message" role="alert" aria-live="polite"></p>
+
+              <p class="quick-label">Or choose quickly</p>
+              <div class="quick-grid" role="group" aria-label="Quick donation amounts">
+                <button class="quick-button" type="button" data-amount="100">₹100</button>
+                <button class="quick-button" type="button" data-amount="500">₹500</button>
+                <button class="quick-button" type="button" data-amount="1000">₹1,000</button>
+                <button class="quick-button" type="button" data-amount="2000">₹2,000</button>
+              </div>
+
+              <div class="app-grid" aria-label="Pay with an app">
+                <button class="app-button" type="button" data-provider="Google Pay">
+                  <span class="app-logo gpay" aria-hidden="true">G</span> Google Pay
+                </button>
+                <button class="app-button" type="button" data-provider="PhonePe">
+                  <span class="app-logo phonepe" aria-hidden="true">पे</span> PhonePe
+                </button>
+                <button class="app-button" type="button" data-provider="Paytm">
+                  <span class="app-logo paytm" aria-hidden="true">P</span> Paytm
+                </button>
+              </div>
+
+              <div class="upi-row">
+                <div class="upi-copy">
+                  <span class="upi-caption">UPI ID</span>
+                  <span class="upi-id" id="upi-id-text">puneetmahour@ptyes</span>
+                </div>
+                <button class="copy-button" id="copy-upi" type="button">Copy UPI ID</button>
+              </div>
+
+              <button class="donate-button" type="submit">
+                Continue to UPI
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+
+              <button class="app-redirect" id="app-redirect" type="button">
+                Donate via App
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+              <p class="supporting-text">You’ll be taken to your chosen payment app. We do not store your payment details.</p>
+              <p id="payment-status" class="payment-status" role="status" aria-live="polite"></p>
+              <p class="reference-line">
+                <span class="dot" aria-hidden="true"></span>
+                Reference generated per attempt: <strong id="reference-number">Not started</strong>
+              </p>
+            </form>
+          </section>
+
+          <section class="qr-section" aria-labelledby="qr-title">
+            <div class="qr-frame">
+              <img id="qr-image" alt="UPI QR code for Umeed Foundation" />
+              <div id="qr-fallback" class="qr-fallback" hidden>UPI<br />QR</div>
+            </div>
+            <div class="qr-copy">
+              <h2 id="qr-title">Scan &amp; Donate</h2>
+              <p>Open any UPI app and scan this code to give directly.</p>
+              <span class="no-amount">No amount is pre-filled</span>
+            </div>
+          </section>
+
+          <section class="about-card" aria-labelledby="about-title">
+            <h2 id="about-title">About Umeed Foundation</h2>
+            <p>
+              Umeed Foundation is a community-led initiative focused on supporting people through difficult moments with care, dignity and practical help.
+            </p>
+            <dl class="details">
+              <div class="detail"><dt>NGO Registration</dt><dd>[Add registration details]</dd></div>
+              <div class="detail"><dt>Contact</dt><dd>[Add contact number]</dd></div>
+              <div class="detail"><dt>Email</dt><dd>[Add email]</dd></div>
+              <div class="detail"><dt>Address</dt><dd>[Add address]</dd></div>
+            </dl>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      /* Change these values when the campaign details are ready. */
+      const NGO_NAME = "Umeed Foundation";
+      const CAMPAIGN_NAME = "Help for Poor — Flood Affected";
+      const UPI_ID = "puneetmahour@ptyes";
+      const APP_REDIRECT_URL = "https://example.com/umeed-app";
+      const QR_IMAGE_PATH = "qr.png";
+
+      const DESCRIPTION = `Donation to ${NGO_NAME} - ${CAMPAIGN_NAME}`;
+      const amountInput = document.querySelector("#amount");
+      const amountError = document.querySelector("#amount-error");
+      const paymentStatus = document.querySelector("#payment-status");
+      const referenceNumber = document.querySelector("#reference-number");
+      const qrImage = document.querySelector("#qr-image");
+      const qrFallback = document.querySelector("#qr-fallback");
+      const copyButton = document.querySelector("#copy-upi");
+
+      /* The QR contains a fixed, amount-free UPI URI so donors choose the amount in-app. */
+      const fixedQrUri = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(NGO_NAME)}&cu=INR&tn=${encodeURIComponent(DESCRIPTION)}`;
+      const generatedQrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=12&data=${encodeURIComponent(fixedQrUri)}`;
+      /*
+       * Use the generated fixed QR by default so this one-file page works immediately.
+       * To use a supplied local asset instead, replace the next line with:
+       * qrImage.src = QR_IMAGE_PATH;
+       */
+      qrImage.src = generatedQrUrl;
+      qrImage.addEventListener("error", () => {
+        /* If the generated image is unavailable, keep the layout usable and explain the local option. */
+        qrImage.hidden = true;
+        qrFallback.hidden = false;
+      });
+
+      function formatInr(value) {
+        return new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+          maximumFractionDigits: 2
+        }).format(value);
+      }
+
+      function createReference() {
+        const now = new Date();
+        const stamp = [
+          now.getFullYear().toString().slice(-2),
+          String(now.getMonth() + 1).padStart(2, "0"),
+          String(now.getDate()).padStart(2, "0"),
+          String(now.getHours()).padStart(2, "0"),
+          String(now.getMinutes()).padStart(2, "0"),
+          String(now.getSeconds()).padStart(2, "0")
+        ].join("");
+        const randomPart = Math.random().toString(36).slice(2, 7).toUpperCase();
+        return `UMEED-${stamp}-${randomPart}`;
+      }
+
+      function getValidAmount() {
+        const amount = Number.parseFloat(amountInput.value);
+        if (!Number.isFinite(amount) || amount <= 0) {
+          amountInput.setAttribute("aria-invalid", "true");
+          amountError.textContent = "Please enter a donation amount greater than ₹0.";
+          amountInput.focus();
+          return null;
+        }
+        if (amount > 10000000) {
+          amountInput.setAttribute("aria-invalid", "true");
+          amountError.textContent = "Please enter an amount below ₹1,00,00,000.";
+          amountInput.focus();
+          return null;
+        }
+        amountInput.removeAttribute("aria-invalid");
+        amountError.textContent = "";
+        return amount;
+      }
+
+      function buildUpiUri(amount, provider) {
+        const reference = createReference();
+        referenceNumber.textContent = reference;
+        const params = new URLSearchParams({
+          pa: UPI_ID,
+          pn: NGO_NAME,
+          am: amount.toFixed(2),
+          cu: "INR",
+        });
+        params.set("tn", `${DESCRIPTION} | Ref: ${reference}`);
+
+        /* App-specific schemes improve handoff; the generic UPI URI remains the fallback. */
+        const scheme = {
+          "Google Pay": "tez",
+          "PhonePe": "phonepe",
+          "Paytm": "paytmmp"
+        }[provider];
+        return `${scheme || "upi"}://pay?${params.toString()}`;
+      }
+
+      function showLaunchMessage(provider, amount, reference) {
+        paymentStatus.innerHTML = `<strong>${provider} should open now.</strong> If it doesn’t, scan the QR code or copy the UPI ID instead. Your reference is ${reference}.`;
+        paymentStatus.classList.add("visible");
+        paymentStatus.dataset.amount = formatInr(amount);
+      }
+
+      function launchPaymentApp(provider = "UPI") {
+        const amount = getValidAmount();
+        if (amount === null) return;
+        const uri = buildUpiUri(amount, provider);
+        const reference = referenceNumber.textContent;
+        showLaunchMessage(provider, amount, reference);
+
+        /* Browsers cannot confirm an external UPI app's result. This only starts the handoff. */
+        window.location.href = uri;
+      }
+
+      document.querySelectorAll(".quick-button").forEach((button) => {
+        button.addEventListener("click", () => {
+          amountInput.value = button.dataset.amount;
+          amountInput.removeAttribute("aria-invalid");
+          amountError.textContent = "";
+          document.querySelectorAll(".quick-button").forEach((item) => item.classList.remove("selected"));
+          button.classList.add("selected");
+        });
+      });
+
+      amountInput.addEventListener("input", () => {
+        amountInput.removeAttribute("aria-invalid");
+        amountError.textContent = "";
+        document.querySelectorAll(".quick-button").forEach((item) => {
+          item.classList.toggle("selected", item.dataset.amount === amountInput.value);
+        });
+      });
+
+      document.querySelector("#donation-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        launchPaymentApp();
+      });
+
+      document.querySelectorAll("[data-provider]").forEach((button) => {
+        button.addEventListener("click", () => launchPaymentApp(button.dataset.provider));
+      });
+
+      copyButton.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(UPI_ID);
+          copyButton.textContent = "Copied!";
+          setTimeout(() => { copyButton.textContent = "Copy UPI ID"; }, 1800);
+        } catch {
+          const helper = document.createElement("textarea");
+          helper.value = UPI_ID;
+          helper.setAttribute("readonly", "");
+          helper.style.position = "fixed";
+          helper.style.opacity = "0";
+          document.body.appendChild(helper);
+          helper.select();
+          document.execCommand("copy");
+          helper.remove();
+          copyButton.textContent = "Copied!";
+          setTimeout(() => { copyButton.textContent = "Copy UPI ID"; }, 1800);
+        }
+      });
+
+      document.querySelector("#app-redirect").addEventListener("click", () => {
+        const amount = getValidAmount();
+        if (amount === null) return;
+        const reference = createReference();
+        referenceNumber.textContent = reference;
+        window.location.href = APP_REDIRECT_URL;
+      });
+    </script>
+  </body>
+</html>
